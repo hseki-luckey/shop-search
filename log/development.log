@@ -24174,3 +24174,12 @@ Completed 200 OK in 2413ms (Views: 2376.5ms | ActiveRecord: 0.8ms)
 
 
 Started GET "/assets/scaffolds.self-0961534bfede9fc6136735ed6eba8f15e887c805119637197dd23ded8c83a946.css?body=1" for ::1 at 2018-04-19 22:56:48 +0900
+
+
+Started GET "/" for ::1 at 2018-04-20 00:12:22 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (2.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by PostsController#index as HTML
+  [1m[35m (2.2ms)[0m  SELECT COUNT(*) FROM "posts"
+  [1m[36mPost Load (0.2ms)[0m  [1mSELECT  "posts".* FROM "posts" LIMIT 10 OFFSET 0[0m
+  Rendered posts/index.html.erb within layouts/application (54.7ms)
+Completed 200 OK in 2273ms (Views: 2244.5ms | ActiveRecord: 2.8ms)

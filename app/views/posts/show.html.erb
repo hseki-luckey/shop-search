@@ -1,0 +1,62 @@
+<% provide(:title, "『"+@post.shop+"』の店舗情報") %>
+
+<% if user_signed_in? %>
+<%= link_to '店舗情報の編集', edit_post_path(@post) %> |
+<% end %>
+<%= link_to 'TOPに戻る', posts_path %>
+<br /><br />
+<table class="show">
+  <tr>
+    <th>店名</th>
+    <td><%= @post.shop %></td>
+  </tr>
+  <tr>
+    <th>エリア</th>
+    <td><%= @post.area %></td>
+  </tr>
+  <tr>
+    <th>ジャンル</th>
+    <td><%= @post.genre %></td>
+  </tr>
+  <tr>
+    <th>価格</th>
+    <td>
+    <% if @post.rate_l.present? %>¥<%= @post.rate_l %><% end %> 
+    <% if @post.rate_l.present? || @post.rate_u.present? %> 〜 <% end %>
+    <% if @post.rate_u.present? %>¥<%= @post.rate_u %><% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>食べログURL</th>
+    <td><%= link_to @post.url, @post.url %></td>
+  </tr>
+</table>
+
+<br />
+<h3>【みんなの書き込み】</h3>
+<div>
+  <% if user_signed_in? %>
+    <%= render 'comments/form' %><br />
+  <% end %>
+  <% if @comments.present? %>
+  <% @comments.each do |comment| %>
+    <div class="comment">
+      <div class="commentContents">
+        <% if comment.user.present?
+            commenter = comment.user.name
+          else
+            commenter = '削除されたユーザー'
+          end
+        %>
+        <p><small>投稿者：<%= commenter %></small></p>
+        <p><%= comment.body %></p>
+        <% if user_signed_in? && comment.user == current_user %>
+        <div style="text-align:right;"><small><%= link_to 'コメント削除', comment_path(comment), method: :delete %></small></div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <% else %>
+  =======================書き込みなし =======================
+  <% end %>
+</div>

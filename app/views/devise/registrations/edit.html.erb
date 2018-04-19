@@ -1,0 +1,43 @@
+<% provide(:title, "プロフィール") %>
+
+<h2>プロフィール</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    新しいパスワード<br />
+    <i>※未入力の場合は変更されません</i><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    新しいパスワードの再入力<br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    現在のパスワード<br />
+    <i>※パスワードを変更する場合は入力が必要です</i><br />
+    <%= f.password_field :current_password, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "プロフィール更新" %>
+  </div>
+<% end %>
+
+<br />
+
+<p><%= button_to "退会する", registration_path(resource_name), data: { confirm: "本当に退会しますか？" }, method: :delete %></p>
+
+<%= link_to "TOPに戻る", :back %>

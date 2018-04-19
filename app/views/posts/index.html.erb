@@ -1,0 +1,79 @@
+<% provide(:title, "店舗一覧") %>
+
+<form>
+キーワード：<%= text_field_tag :keyword, params[:keyword] %><br />
+店名　　　：<%= text_field_tag :shop, params[:shop] %><br />
+エリア　　：
+<%
+  areasInfo = ['八丁堀', '茅場町', '築地' , '銀座', '丸の内', '大手町', '日本橋', '京橋', '有楽町', '日比谷']
+  areasInfo.each do|area|
+    checked = ''
+    if params[:area].present? && params[:area].include?(area)
+      checked = 'checked'
+    end
+%>
+    <input type="checkbox" value="<%= area %>" name="area[]" <%= checked %>><%= area %>
+<% end %>
+<br />
+ジャンル　：
+<%
+  genresInfo = ['フレンチ', 'イタリアン', '西洋料理', 'カフェ', 'インドカレー', '日本食']
+  genresInfo.each do|genre|
+    checked = ''
+    if params[:genre].present? && params[:genre].include?(genre)
+      checked = 'checked'
+    end
+%>
+    <input type="checkbox" value="<%= genre %>" name="genre[]" <%= checked %>><%= genre %>
+<% end %>
+<br />
+価格　　　：¥ <%= number_field_tag :rate_l, params[:rate_l] %> 〜 ¥ <%= number_field_tag :rate_u, params[:rate_u] %>
+<br />
+<input type="submit" value="検索" style="margin:10px 0px 10px; ">
+</form>
+<hr />
+
+<%= page_entries_info @posts %>
+<br /><br />
+
+<table class="shops">
+  <thead>
+    <tr>
+      <th width="30%">店名</th>
+      <th width="20%">エリア</th>
+      <th width="20%">ジャンル</th>
+      <th width="20%">価格</th>
+      <th colspan="2" width="10%"><th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td>
+          <%= link_to post.shop, post.url %>
+        </td>
+        <td><%= post.area %></td>
+        <td><%= post.genre %></td>
+        <td>
+        <% if post.rate_l.present? %>¥<%= post.rate_l %><% end %>       
+        <% if post.rate_l.present? || post.rate_u.present? %> 〜 <% end %>
+        <% if post.rate_u.present? %>¥<%= post.rate_u %><% end %>
+        </td> 
+        <td><%= link_to '詳細', post %></td>
+        <% if user_signed_in? %>
+        <td><%= link_to '編集', edit_post_path(post) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />
+<center>
+<%= paginate @posts, outer_window: 4 %>
+</center>
+
+<br>
+<% if user_signed_in? %>
+<%= link_to '新しい店を登録する', new_post_path %>
+<% end %>

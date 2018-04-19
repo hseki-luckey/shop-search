@@ -1,0 +1,76 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="edit">
+  <tr>
+    <th>店名</th>
+    <td><%= f.text_field :shop %></td>
+  </tr>
+  <tr>
+    <th>エリア</th>
+    <td>
+    <%
+    areasInfo = ['八丁堀', '茅場町', '築地' , '銀座', '丸の内', '大手町', '日本橋', '京橋', '有楽町', '日比谷']
+    post_area = Array.new
+    if @post.area.present?
+      post_area = @post.area.split('/')
+    end
+    
+    areasInfo.each do|area|
+      checked = ''
+      if post_area.include?(area)
+        checked = "checked"
+      end 
+    %>
+    <input type="checkbox" value="<%= area %>" name="area[]" <%= checked %> ><%= area %>
+    <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>ジャンル</th>
+    <td>
+    <%
+    genresInfo = ['フレンチ', 'イタリアン', '西洋料理', 'カフェ', 'インドカレー', '日本食']
+    post_genre = Array.new
+    if @post.genre.present?
+      post_genre = @post.genre.split('/')
+    end
+
+    genresInfo.each do|genre|
+      checked = ''
+      if post_genre.include?(genre)
+        checked = "checked"
+      end
+    %>
+      <input type="checkbox" value="<%= genre %>" name="genre[]" <%= checked %> ><%= genre %>
+    <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>価格</th>
+    <td>¥<%= f.number_field :rate_l %> 〜 ¥<%= f.number_field :rate_u %></td>
+  </tr>
+  <tr>
+    <th>食べログURL</th>
+    <td><%= f.text_field :url %></td>
+  </tr>
+  </table>
+  <br />
+  <div class="actions">
+  <% if @post.shop.present? %>
+    <%= f.submit '店舗情報の更新' %>
+  <% else %>
+    <%= f.submit '店舗情報の追加' %>
+  <% end %>
+  </div>
+<% end %>

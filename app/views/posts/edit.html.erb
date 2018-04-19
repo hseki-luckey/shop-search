@@ -1,0 +1,8 @@
+<% provide(:title, "『"+@post.shop+"』の編集") %>
+
+<h1>店舗情報の編集</h1>
+
+<%= render 'form' %>
+
+<%= link_to '店舗情報', @post %> |
+<%= link_to 'TOPに戻る', posts_path %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shop: MyString
+  area: MyString
+  genre: MyString
+  rate_u: 1
+  rate_l: 1
+  url: MyString
+
+two:
+  shop: MyString
+  area: MyString
+  genre: MyString
+  rate_u: 1
+  rate_l: 1
+  url: MyString
